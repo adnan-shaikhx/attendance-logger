@@ -1,0 +1,22 @@
+name: Run Script
+
+on:
+  schedule:
+    # Morning run at 8:45 AM UTC, Monday to Friday
+    - cron: '45 8 * * 1-5'
+    # Evening run at 7:30 PM UTC, Monday to Friday
+    - cron: '30 19 * * 1-5'
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm install
+      - name: Run Script
+        run: node index.js

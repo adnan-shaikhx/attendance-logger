@@ -1,0 +1,9 @@
+# Ignore the .env file
+.env
+
+# Ignore node_modules directory (if it's a Node.js project)
+node_modules/
+
+# Ignore logs
+*.log
+
