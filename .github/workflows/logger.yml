@@ -3,9 +3,9 @@ name: Run Script
 on:
   schedule:
     # Morning run at 8:45 AM UTC, Monday to Friday
-    - cron: '45 8 * * 1-5'
+    - cron: '15 3 * * 1-5'
     # Evening run at 7:30 PM UTC, Monday to Friday
-    - cron: '30 19 * * 1-5'
+    - cron: '0 14 * * 1-5'
 
 jobs:
   run-script:
