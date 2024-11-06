@@ -1,16 +1,18 @@
-const puppeteer = require("puppeteer");
-require('dotenv').config();
+import { launch } from "puppeteer";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const {
     PEOPLEHUM_EMAIL,
     PEOPLEHUM_PASSWORD,
     PEOPLEHUM_BASE_URL,
     PEOPLEHUM_SIGNIN_PAGE
-} = process.env
+} = process.env;
 
 (async () => {
   // Launch the browser
-  const browser = await puppeteer.launch({
+  const browser = await launch({
     headless: true,
     args: ["--use-fake-ui-for-media-stream"], // Auto-allow location prompt
   });
