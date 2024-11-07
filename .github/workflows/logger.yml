@@ -3,7 +3,8 @@ name: Run Script
 on:
   schedule:
     # Morning run at 8:45 AM UTC, Monday to Friday
-    - cron: '15 3 * * 1-5'
+    # - cron: '15 3 * * 1-5'
+    - cron: '5 4 * * 1-5'
     # Evening run at 7:30 PM UTC, Monday to Friday
     - cron: '0 14 * * 1-5'
 
@@ -21,4 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run Script
+        env:
+          PEOPLEHUM_EMAIL: ${{ secrets.PEOPLEHUM_EMAIL }}
+          PEOPLEHUM_PASSWORD: ${{ secrets.PEOPLEHUM_PASSWORD }}
+          PEOPLEHUM_BASE_URL: ${{ secrets.PEOPLEHUM_BASE_URL }}
+          PEOPLEHUM_SIGNIN_PAGE: ${{ secrets.PEOPLEHUM_SIGNIN_PAGE }}
         run: node index.js
