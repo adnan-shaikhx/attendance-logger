@@ -1,5 +1,6 @@
 import { launch } from "puppeteer";
 import dotenv from 'dotenv';
+import clockZoho from "./zoho.js";
 
 dotenv.config();
 
@@ -56,4 +57,5 @@ const {
 
   // Close the browser
   await browser.close();
+  await clockZoho()
 })();
