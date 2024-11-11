@@ -8,7 +8,7 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
 
 (async () => {
   const browser = await launch({
-    headless: false,
+    headless: true,
     args: ["--use-fake-ui-for-media-stream"], // Auto-allow location prompt
   });
   const page = await browser.newPage();
