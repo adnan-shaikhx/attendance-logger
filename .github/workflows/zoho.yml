@@ -1,5 +1,8 @@
 name: Test run ZOHO
 
+on:
+  workflow_dispatch:  # Allows manual triggering from GitHub Actions tab
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
