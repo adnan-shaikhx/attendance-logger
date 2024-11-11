@@ -19,7 +19,7 @@ const {
   const page = await browser.newPage();
 
   // Set geolocation (optional)
-  await page.setGeolocation({ latitude: 23.0260736, longitude: 72.5581824 });
+  await page.setGeolocation({ latitude: 23.0005585, longitude: 72.5307116 });
 
   // Override permissions to allow geolocation
   const context = browser.defaultBrowserContext();

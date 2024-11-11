@@ -7,7 +7,7 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   process.env;
 
 (async () => {
-  const browser = await launch.launch({
+  const browser = await launch({
     headless: true,
     args: ["--use-fake-ui-for-media-stream"], // Auto-allow location prompt
   });
