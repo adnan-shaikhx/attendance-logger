@@ -1,23 +1,13 @@
-import puppeteer from "puppeteer";
-import dotenv from 'dotenv';
+import { launch } from "puppeteer";
+import dotenv from "dotenv";
 
 dotenv.config();
 
-const {
-    ZOHO_EMAIL,
-    ZOHO_PASSWORD,
-    ZOHO_BASE_URL,
-    ZOHO_SIGNIN_PAGE
-} = process.env;
+const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
+  process.env;
 
-export default async function clockZoho() {
-    try {
-      console.log("ZOHO_EMAIL:", process.env.ZOHO_EMAIL);
-console.log("ZOHO_PASSWORD:", process.env.ZOHO_PASSWORD ? `***${process.env.ZOHO_PASSWORD.slice(-2)}` : "Not set");
-console.log("ZOHO_BASE_URL:", process.env.ZOHO_BASE_URL || "Not set");
-console.log("ZOHO_SIGNIN_PAGE:", process.env.ZOHO_SIGNIN_PAGE || "Not set");
-
-  const browser = await puppeteer.launch({
+(async () => {
+  const browser = await launch.launch({
     headless: true,
     args: ["--use-fake-ui-for-media-stream"], // Auto-allow location prompt
   });
@@ -28,32 +18,29 @@ console.log("ZOHO_SIGNIN_PAGE:", process.env.ZOHO_SIGNIN_PAGE || "Not set");
 
   // Override permissions to allow geolocation
   const context = browser.defaultBrowserContext();
-  await context.overridePermissions(
-    ZOHO_BASE_URL,
-    ["geolocation"]
-  );
+  await context.overridePermissions(ZOHO_BASE_URL, ["geolocation"]);
 
   // Navigate to the PeopleHum login page
   await page.goto(ZOHO_SIGNIN_PAGE);
 
-await page.waitForSelector('#login_id', { visible: true });
+  await page.waitForSelector("#login_id", { visible: true });
 
-// Click on the email input to ensure focus
-await page.click('#login_id');
+  // Click on the email input to ensure focus
+  await page.click("#login_id");
 
-// Type in the email with a slight delay
-await page.type('#login_id', ZOHO_EMAIL, { delay: 100 });
+  // Type in the email with a slight delay
+  await page.type("#login_id", ZOHO_EMAIL, { delay: 100 });
 
   // Click the Next button
   await page.click("#nextbtn");
 
-  await page.waitForSelector('#password', { visible: true });
+  await page.waitForSelector("#password", { visible: true });
 
-// Click on the email input to ensure focus
-await page.click('#password');
+  // Click on the email input to ensure focus
+  await page.click("#password");
 
-// Type in the email with a slight delay
-await page.type('#password', ZOHO_PASSWORD, { delay: 100 });
+  // Type in the email with a slight delay
+  await page.type("#password", ZOHO_PASSWORD, { delay: 100 });
 
   // Click the Nsing in
   await page.click("#nextbtn");
@@ -72,9 +59,4 @@ await page.type('#password', ZOHO_PASSWORD, { delay: 100 });
 
   // Close the browser
   await browser.close();
-  //   ZPAtt_check_in_out checking btn
-          
-} catch (error) {
-    console.error(error)  
-}
-}
+})();

@@ -1,7 +1,7 @@
 name: Test run ZOHO
 
 on:
-  workflow_dispatch:  # Allows manual triggering from GitHub Actions tab
+  workflow_dispatch: # Allows manual triggering from GitHub Actions tab
 
 jobs:
   run-script:
@@ -9,14 +9,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: master  # Ensure it checks out the master branch
+          ref: master # Ensure it checks out the master branch
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
       - name: Install dependencies
         run: npm install
-      - name: Run Script
+      - name: Log time in ZOHO
         env:
           ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
           ZOHO_PASSWORD: ${{ secrets.ZOHO_PASSWORD }}
