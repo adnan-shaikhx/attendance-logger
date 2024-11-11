@@ -12,6 +12,11 @@ const {
 
 export default async function clockZoho() {
     try {
+      console.log("ZOHO_EMAIL:", process.env.ZOHO_EMAIL);
+console.log("ZOHO_PASSWORD:", process.env.ZOHO_PASSWORD ? `***${process.env.ZOHO_PASSWORD.slice(-2)}` : "Not set");
+console.log("ZOHO_BASE_URL:", process.env.ZOHO_BASE_URL || "Not set");
+console.log("ZOHO_SIGNIN_PAGE:", process.env.ZOHO_SIGNIN_PAGE || "Not set");
+
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--use-fake-ui-for-media-stream"], // Auto-allow location prompt
