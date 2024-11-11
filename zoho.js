@@ -19,6 +19,8 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Override permissions to allow geolocation
   const context = browser.defaultBrowserContext();
   await context.overridePermissions(ZOHO_BASE_URL, ["geolocation"]);
+  
+  console.debug('[DEBUG] overridden web permission')
 
   // Navigate to the PeopleHum login page
   await page.goto(ZOHO_SIGNIN_PAGE);
@@ -31,6 +33,8 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Type in the email with a slight delay
   await page.type("#login_id", ZOHO_EMAIL, { delay: 100 });
 
+  console.debug('[DEBUG] entered mail')
+
   // Click the Next button
   await page.click("#nextbtn");
 
@@ -42,6 +46,8 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Type in the email with a slight delay
   await page.type("#password", ZOHO_PASSWORD, { delay: 100 });
 
+  console.debug('[DEBUG] entered password')
+
   // Click the Nsing in
   await page.click("#nextbtn");
 
@@ -51,8 +57,12 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Wait for the clock-in button to be visible
   await page.waitForSelector("#ZPAtt_check_in_out", { visible: true });
 
+  console.debug('[DEBUG] found check out button ')
+
   // Click the clock-in button
   await page.click("#ZPAtt_check_in_out");
+
+  console.debug('[DEBUG] Done 🚀 closing browser')
 
   // Wait for confirmation or additional actions
   await new Promise((resolve) => setTimeout(resolve, 3000));
