@@ -1,10 +1,13 @@
+function sanitizeURL(url) {
+  return url.replace(/https?:\/\//, '[PROTOCOL]://').replace('.com', '[DOMAIN]');
+}
+
 import { launch } from "puppeteer";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
-  process.env;
+const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } = process.env;
 
 (async () => {
   const browser = await launch({
@@ -19,57 +22,65 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Override permissions to allow geolocation
   const context = browser.defaultBrowserContext();
   await context.overridePermissions(ZOHO_BASE_URL, ["geolocation"]);
-  
-  console.debug('[DEBUG] overridden web permission')
+
+  console.log('[LOG] overridden web permission');
 
   // Navigate to the PeopleHum login page
-  await page.goto(ZOHO_SIGNIN_PAGE);
+  await page.goto(ZOHO_SIGNIN_PAGE, { waitUntil: 'domcontentloaded' });
 
-  console.debug("current URL: ", page.url())
-
+  // Sanitize URL before logging
+  console.log("current URL after goto: ", sanitizeURL(page.url()));
 
   await page.waitForSelector("#login_id", { visible: true });
-
-  // Click on the email input to ensure focus
+  
+  // Ensure email input is focused
   await page.click("#login_id");
-
+  
   // Type in the email with a slight delay
   await page.type("#login_id", ZOHO_EMAIL, { delay: 100 });
 
-  console.debug('[DEBUG] entered mail')
+  console.log('[LOG] entered mail');
 
   // Click the Next button
   await page.click("#nextbtn");
 
   await page.waitForSelector("#password", { visible: true });
 
-  // Click on the email input to ensure focus
+  // Ensure password input is focused
   await page.click("#password");
 
-  // Type in the email with a slight delay
+  // Type in the password with a slight delay
   await page.type("#password", ZOHO_PASSWORD, { delay: 100 });
 
-  console.debug('[DEBUG] entered password')
+  console.log('[LOG] entered password');
 
-  // Click the Nsing in
+  // Click the sign-in button
   await page.click("#nextbtn");
 
-  console.debug("current URL b4 navigation: ", page.url())
+  // Log URL before waiting for navigation
+  console.log("current URL before navigation: ", sanitizeURL(page.url()));
 
   // Wait for the page to navigate after login
-  await page.waitForNavigation();
+  try {
+    await page.waitForNavigation({ waitUntil: 'networkidle0' });
+    console.log("Navigated to: ", sanitizeURL(page.url()));
+  } catch (error) {
+    console.error("Navigation error:", error);
+    console.log("Current page URL during navigation error: ", sanitizeURL(page.url()));
+  }
 
-  console.debug("current URL b4 navigation: ", page.url())
+  // Log URL after navigation
+  console.log("current URL after navigation: ", sanitizeURL(page.url()));
 
   // Wait for the clock-in button to be visible
   await page.waitForSelector("#ZPAtt_check_in_out", { visible: true });
 
-  console.debug('[DEBUG] found check out button ')
+  console.log('[LOG] found check-in button');
 
   // Click the clock-in button
   await page.click("#ZPAtt_check_in_out");
 
-  console.debug('[DEBUG] Done 🚀 closing browser')
+  console.log('[LOG] Done 🚀 closing browser');
 
   // Wait for confirmation or additional actions
   await new Promise((resolve) => setTimeout(resolve, 3000));
