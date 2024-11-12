@@ -62,7 +62,8 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } = process.e
 
   // Wait for the page to navigate after login
   try {
-    await page.waitForNavigation({ waitUntil: 'networkidle0' });
+    await page.waitForNavigation({ waitUntil: 'load', timeout: 60000 });
+
     console.log("Navigated to: ", sanitizeURL(page.url()));
   } catch (error) {
     console.error("Navigation error:", error);
