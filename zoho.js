@@ -25,6 +25,9 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Navigate to the PeopleHum login page
   await page.goto(ZOHO_SIGNIN_PAGE);
 
+  console.debug("current URL: ", page.url())
+
+
   await page.waitForSelector("#login_id", { visible: true });
 
   // Click on the email input to ensure focus
@@ -51,8 +54,12 @@ const { ZOHO_EMAIL, ZOHO_PASSWORD, ZOHO_BASE_URL, ZOHO_SIGNIN_PAGE } =
   // Click the Nsing in
   await page.click("#nextbtn");
 
+  console.debug("current URL b4 navigation: ", page.url())
+
   // Wait for the page to navigate after login
   await page.waitForNavigation();
+
+  console.debug("current URL b4 navigation: ", page.url())
 
   // Wait for the clock-in button to be visible
   await page.waitForSelector("#ZPAtt_check_in_out", { visible: true });
