@@ -26,11 +26,4 @@ jobs:
           PEOPLEHUM_PASSWORD: ${{ secrets.PEOPLEHUM_PASSWORD }}
           PEOPLEHUM_BASE_URL: ${{ secrets.PEOPLEHUM_BASE_URL }}
           PEOPLEHUM_SIGNIN_PAGE: ${{ secrets.PEOPLEHUM_SIGNIN_PAGE }}
-        run: node index.js
-      - name: Log in to ZOHO
-        env:
-          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
-          ZOHO_PASSWORD: ${{ secrets.ZOHO_PASSWORD }}
-          ZOHO_BASE_URL: ${{ secrets.ZOHO_BASE_URL }}
-          ZOHO_SIGNIN_PAGE: ${{ secrets.ZOHO_SIGNIN_PAGE }}
-        run: node zoho.js  
+        run: node index.js 
