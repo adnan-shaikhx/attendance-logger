@@ -14,7 +14,7 @@ const {
   // Launch the browser
   const browser = await launch({
     headless: true,
-    args: ["--use-fake-ui-for-media-stream"], // Auto-allow location prompt
+    args: ["--use-fake-ui-for-media-stream", '--no-sandbox', '--disable-setuid-sandbox'], // Auto-allow location prompt
   });
   const page = await browser.newPage();
 
